@@ -84,7 +84,7 @@ print(ftfn/x_ftfn)
 
 plt.plot(x_ftfn,ftfn)
 plt.show()
-
+change=1
 
 ###############
 # werte fur sql
