@@ -65,7 +65,6 @@ connection.close()
 
 
 
-
 ####################################################### formula for RT_sqrt table in DB FOH_RT.db
 # plot maximal of all radial/transversal versus F_t/F_n
 
