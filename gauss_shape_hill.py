@@ -2,9 +2,41 @@
 
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 
-############################
+#local libs
+from _utils import _theo_disp,format_paper
 
+############################ read eigenmodes
+
+format_paper()
+
+#### read depth values and calculate the depth vector
+
+temp=pd.read_csv("./theo_EM/SLDER_1.0_Hz.TXT", skiprows=range(0, 3), nrows=66, delim_whitespace=True)
+d=np.array(temp)
+dd=np.cumsum(d[:,1])*1000-100     # da wir nur distance haen macht diese fkt. eine plot array
+
+
+# read eigenmodes values
+temp=pd.read_csv("./theo_EM/SLDER_1.0_Hz.TXT", skiprows=range(0, 75), delim_whitespace=True)
+prov=np.array(temp)
+UT=prov[:,1]
+
+temp=pd.read_csv("./theo_EM/SRDER_1.0_Hz.TXT", skiprows=range(0, 75), delim_whitespace=True)
+prov=np.array(temp)
+UR=prov[:,1]
+UZ=prov[:,3]
+
+# read elipicity data
+temp = pd.read_csv("/home/djamel/PHD_projects/scatering_Paper/theo_EM_scattering/SREGN_1.0_Hz.TXT",
+                   skiprows=range(0, 3), delim_whitespace=True)
+global c_r
+c_r = np.array(temp)[0, 3] * 1000  # read group velocity of Rayleigh waves
+
+
+# plt.plot(d,UR,d,UT)
+# plt.show()
 
 
 
@@ -13,9 +45,11 @@ size = 100000                                          # lange des models
 number_grid=3000                                       # gitterpunkte in eine richtung
 sigma_x = 1050.                                     # je grosser sigma umso breiter gauss kurve
 mu=size/2                                            # verschiebung der gauss kurve in eine richtung -> ich lasse kurve immer in der mitte
-h=1000000000.                                          # hohe hill
+h=6000000000.                                          # hohe hill
 
-l_RW=2150                                               # length of the Ralyiegh wave
+freq=1.0
+
+l_RW=c_r/freq                                               # wavelength at certain frequency Rayleigh wave
 
 ###########################
 
@@ -89,6 +123,18 @@ plt.hold(True)
 plt.plot(index_m*size/number_grid,max(pp), 'go')
 plt.plot(len_gauss,[0,0])
 plt.hold(True)
+plt.plot([0, 100000],[-1000,-1000])
+plt.hold(True)
+plt.plot([0, 100000],[-2000,-2000])
+plt.hold(True)
+plt.plot([0, 100000],[-4000,-4000])
+plt.hold(True)
+plt.plot([0, 100000],[-7000,-7000])
+plt.hold(True)
+plt.plot(UT*3000+50000,-dd)
+
+plt.xlim((40000,60000))
+plt.ylim((0,1500))
 
 plt.xlabel('length [m]')
 plt.ylabel('heigth [m]')
@@ -96,7 +142,7 @@ plt.annotate('maximum gradeint: '+str(round(maximum,3)), xy=(index*size/number_g
 #plt.annotate('maximaler punkt ist am Ort: x='+str(int(size/2))+' y='+str(int(index*size/number_grid))+' z='+str(int(z[number_grid/2,index])), xy=(index*size/number_grid-size/6, z[number_grid/2,index]-z[number_grid/2,index]/20))
 plt.annotate('maximum value: '+str(int(max(pp))), xy=(index_m*size/number_grid,max(pp)+max(pp)/60))
 plt.annotate('length gauss curve: '+str(len_gauss_plt)+' m', xy=(pos_len_plt,0-max(pp)/30))
-#plt.annotate('length fundamental Rayleigh mode/length gauss curve: '+str(len_gauss_plt/l_RW)+' m', xy=(pos_len_plt,0-max(pp)/15))
+plt.annotate('length fundamental Rayleigh mode/length gauss curve: '+str(len_gauss_plt/l_RW)+' m', xy=(pos_len_plt,0-max(pp)/15))
 
 plt.show()
 

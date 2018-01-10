@@ -31,36 +31,36 @@ connection.commit()
 connection.close()
 
 
-# # calculate the maximume values from R and T
-# max_T=np.zeros((75,29))
-# max_R=np.zeros((75,29))
-# for ii in range(0,74):
-#     for jj in range(0,28):
-#         max_R[ii,jj]=max(data[jj][2][:,ii]**2)
-#         max_T[ii,jj]=max(data[jj][3][:,ii]**2)
+# calculate the maximume values from R and T
+max_T=np.zeros((75,29))
+max_R=np.zeros((75,29))
+for ii in range(0,74):
+    for jj in range(0,28):
+        max_R[ii,jj]=max(data[jj][2][:,ii]**2)
+        max_T[ii,jj]=max(data[jj][3][:,ii]**2)
+
+#max_R=np.concatenate([max_R,max_R[:,0:]], axis=1)
+max_R[:,-1]=max_R[:,0]
+max_T[:,-1]=max_T[:,0]
+
+
+azimuth = np.radians(np.linspace(0, 360, 29))
+#azimuth=np.append(azimuth,azimuth[0])
+radius = np.linspace(0, 24*400, num=75)
+
+
+#actual plotting
+
+# fig, ax = plt.subplots(subplot_kw=dict(projection='polar'),figsize=(20, 12))
+# ctf = ax.contourf(azimuth,radius, max_T/max_R)
+# cb=plt.colorbar(ctf)
+# ax.grid(True)
+# plt.rcParams.update({'font.size': 16})          # macht alle fonts grosser
 #
-# #max_R=np.concatenate([max_R,max_R[:,0:]], axis=1)
-# max_R[:,-1]=max_R[:,0]
-# max_T[:,-1]=max_T[:,0]
+# #fig.savefig('model_7_polar'+'.png',format='png')      # save figure
 #
 #
-# azimuth = np.radians(np.linspace(0, 360, 29))
-# #azimuth=np.append(azimuth,azimuth[0])
-# radius = np.linspace(0, 24*400, num=75)
-#
-#
-# #actual plotting
-#
-# # fig, ax = plt.subplots(subplot_kw=dict(projection='polar'),figsize=(20, 12))
-# # ctf = ax.contourf(azimuth,radius, max_T/max_R)
-# # cb=plt.colorbar(ctf)
-# # ax.grid(True)
-# # plt.rcParams.update({'font.size': 16})          # macht alle fonts grosser
-# #
-# # #fig.savefig('model_7_polar'+'.png',format='png')      # save figure
-# #
-# #
-# # plt.show()
+# plt.show()
 
 
 
@@ -75,16 +75,16 @@ connection.close()
 #
 # print(max_TR_sqrt)
 
-ftfn=np.sort(data[0][0:])
-ftfn=np.array([ftfn[0],ftfn[4],ftfn[6]])
-x_ftfn=np.array([0.083,0.333,0.583])
-print(x_ftfn)
-print(ftfn)
-print(ftfn/x_ftfn)
-
-plt.plot(x_ftfn,ftfn)
-plt.show()
-change=1
+# ftfn=np.sort(data[0][0:])
+# ftfn=np.array([ftfn[0],ftfn[4],ftfn[6]])
+# x_ftfn=np.array([0.083,0.333,0.583])
+# print(x_ftfn)
+# print(ftfn)
+# print(ftfn/x_ftfn)
+#
+# plt.plot(x_ftfn,ftfn)
+# plt.show()
+# change=1
 
 ###############
 # werte fur sql
