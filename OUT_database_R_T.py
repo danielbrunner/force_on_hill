@@ -25,7 +25,7 @@ connection = sqlite3.connect("test_FOH_RT.db",detect_types=sqlite3.PARSE_DECLTYP
 cursor = connection.cursor()
 
 
-cursor.execute("SELECT * FROM model_7_f_peak")
+cursor.execute("SELECT * FROM model_1_f_peak")
 data = cursor.fetchall()
 
 connection.commit()
@@ -48,7 +48,7 @@ max_T[:,-1]=max_T[:,0]
 
 azimuth = np.radians(np.linspace(0, 360, 29))
 #azimuth=np.append(azimuth,azimuth[0])
-radius = np.linspace(15*500, 15*500+75*500, num=75)
+radius = np.linspace(15*500, 15*500+75*500, num=75)/1000
 
 
 
@@ -61,10 +61,10 @@ plt.rcParams.update({'font.size': 16})          # macht alle fonts grosser
 ax.fontcolor='w'
 
 label_position=ax.get_rlabel_position()
-ax.text(np.radians(label_position+6),ax.get_rmax()/1.15,'distance',
+ax.text(np.radians(label_position+6),ax.get_rmax()/1.25,'distance [km]',
         rotation=label_position,ha='center',va='center',fontsize=20)
 
-fig.savefig('model_7_polar'+'.png',format='png')      # save figure
+#fig.savefig('model_1_polar'+'.png',format='png')      # save figure
 
 
 plt.show()
